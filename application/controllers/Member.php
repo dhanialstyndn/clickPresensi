@@ -17,13 +17,6 @@ class Member extends CI_Controller {
 	public function index()
 	{
 		$this->load->view('home');
-		// $nrp = $this->session->userdata('nrp');
-		// $matkul = $this->My_Model->get_matkul($nrp);
-		// if($matkul->num_rows() == 1){
-		// 	foreach ($matkul->result() as $r) {
-		// 		$this->load->view('home', array('kelas' => $matkul));
-		// 	}
-		// }
 	}
 	public function absen()
 	{
