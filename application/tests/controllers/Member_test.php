@@ -124,5 +124,49 @@ class Admin_test extends TestCase
         $expected = $akhir - $mula;
         $this->assertEquals(0, $expected);  
 	}
+	public function testdelete(){
+                $_SESSION['username'] = "kurakura";
+                $_SESSION['nama'] = "Husain";
+		$mula = $this->obj->getCurrentRow();
+		$id = 0;
+		$result = $this->obj->getNrp('5215100131');
+		foreach ($result as $x){
+			$id = $x['nrp'];
+		}
+		$url = 'Admin/delete/'.$id;
+		$output = $this->request('GET', $url);
+		$akhir = $this->obj->getCurrentRow();
+	    $expected = $mula - $akhir;
+	    $this->assertEquals(1, $expected);
+	}
+         public function testdelete_tanpalogin(){
+		$mula = $this->obj->getCurrentRow();
+		$id = 0;
+		$result = $this->obj->getNrp('5215100131');
+		foreach ($result as $x){
+			$id = $x['nrp'];
+		}
+		$url = 'Admin/delete/'.$id;
+		$output = $this->request('GET', $url);
+		$akhir = $this->obj->getCurrentRow();
+	    $expected = $mula - $akhir;
+	    $this->assertEquals(0, $expected);
+	}
+	    public function test_signout(){
+		$_SESSION['username'] = "kurakura";
+		$_SESSION['nama'] = "Husain";
+		$this->assertTrue( isset($_SESSION['username']) );
+		$this->assertTrue( isset($_SESSION['nama']) );
+		$this->request('GET', 'Admin/signout');
+		$this->assertRedirect('Welcome_admin');
+		$this->assertFalse( isset($_SESSION['username']) );
+	    }
     
+	    public function test_signout_(){
+		$this->assertFalse( isset($_SESSION['username']) );
+		$this->request('GET', 'Admin/signout');
+		$this->assertRedirect('Welcome_admin');
+		$this->assertFalse( isset($_SESSION['username']) );
+	    }    
+
 }
