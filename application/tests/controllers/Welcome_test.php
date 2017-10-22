@@ -54,6 +54,26 @@ class Welcome_test extends TestCase
         $this->assertRedirect('Welcome_admin');
         $this->assertFalse( isset($_SESSION['username']) );
     }
+	
+	public function test_masuk_nousername(){
+        $this->request('POST', 'Welcome_admin/masuk',
+            [
+                'username' => '',
+                'password' => 'penyu',
+            ]);
+        $this->assertRedirect('Welcome_admin');
+        $this->assertFalse( isset($_SESSION['username']) );
+    }
+    
+    public function test_submit_masuk_unmatch(){
+        $this->request('POST', 'Welcome_admin/masuk',
+            [
+                'username' => 'kurakura',
+                'password' => 'unmatch',
+            ]);
+        $this->assertRedirect('Welcome_admin');
+        $this->assertFalse( isset($_SESSION['username']) );
+    }
     
     
 }
